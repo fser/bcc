@@ -51,6 +51,7 @@ class BPF {
   StatusTuple init(const std::string& bpf_program,
                    const std::vector<std::string>& cflags = {},
                    const std::vector<USDT>& usdt = {});
+  StatusTuple init_obj(const std::string& obj_filename);
 
   ~BPF();
   StatusTuple detach_all();

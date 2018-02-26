@@ -50,6 +50,7 @@
 #include "frontends/b/loader.h"
 #include "frontends/clang/loader.h"
 #include "frontends/clang/b_frontend_action.h"
+#include "frontends/obj/loader.h"
 #include "bpf_module.h"
 #include "exported_files.h"
 #include "kbuild_helper.h"
@@ -469,6 +470,14 @@ int BPFModule::load_cfile(const string &file, bool in_memory, const char *cflags
   ClangLoader clang_loader(&*ctx_, flags_);
   if (clang_loader.parse(&mod_, *ts_, file, in_memory, cflags, ncflags, id_,
                          *func_src_, mod_src_))
+    return -1;
+  return 0;
+}
+
+// load an object file as a module
+int BPFModule::load_objfile(const string &file) {
+  ObjLoader obj_loader;
+  if (obj_loader.parse())
     return -1;
   return 0;
 }
@@ -968,6 +977,21 @@ int BPFModule::load_c(const string &filename, const char *cflags[], int ncflags)
       return rc;
   }
   if (int rc = finalize())
+    return rc;
+  return 0;
+}
+
+// load an object file
+int BPFModule::load_obj(const string &filename) {
+  if (!sections_.empty()) {
+    fprintf(stderr, "Program already initialized\n");
+    return -1;
+  }
+  if (filename.empty()) {
+    fprintf(stderr, "Invalid filename\n");
+    return -1;
+  }
+  if (int rc = load_objfile(filename))
     return rc;
   return 0;
 }

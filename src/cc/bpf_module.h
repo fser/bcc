@@ -52,6 +52,7 @@ class TableDesc;
 class TableStorage;
 class BLoader;
 class ClangLoader;
+class ObjLoader;
 class FuncSource;
 
 class BPFModule {
@@ -68,6 +69,7 @@ class BPFModule {
   int load_file_module(std::unique_ptr<llvm::Module> *mod, const std::string &file, bool in_memory);
   int load_includes(const std::string &text);
   int load_cfile(const std::string &file, bool in_memory, const char *cflags[], int ncflags);
+  int load_objfile(const std::string &file);
   int kbuild_flags(const char *uname_release, std::vector<std::string> *cflags);
   int run_pass_manager(llvm::Module &mod);
   StatusTuple sscanf(std::string fn_name, const char *str, void *val);
@@ -79,6 +81,7 @@ class BPFModule {
   ~BPFModule();
   int load_b(const std::string &filename, const std::string &proto_filename);
   int load_c(const std::string &filename, const char *cflags[], int ncflags);
+  int load_obj(const std::string &filename);
   int load_string(const std::string &text, const char *cflags[], int ncflags);
   std::string id() const { return id_; }
   size_t num_functions() const;

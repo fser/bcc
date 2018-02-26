@@ -59,7 +59,7 @@ set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${llvm_lib_exclude_f
 
 # bcc_common_libs_for_a for archive libraries
 # bcc_common_libs_for_s for shared libraries
-set(bcc_common_libs_for_a b_frontend clang_frontend bpf-static
+set(bcc_common_libs_for_a b_frontend clang_frontend obj_frontend bpf-static
   ${clang_libs} ${llvm_libs} ${LIBELF_LIBRARIES})
 set(bcc_common_libs_for_s ${bcc_common_libs_for_a})
 

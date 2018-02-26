@@ -3,3 +3,4 @@
 
 add_subdirectory(b)
 add_subdirectory(clang)
+add_subdirectory(obj)

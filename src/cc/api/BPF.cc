@@ -76,6 +76,13 @@ StatusTuple BPF::init(const std::string& bpf_program,
   return StatusTuple(0);
 };
 
+StatusTuple BPF::init_obj(const std::string& obj_filename) {
+  if (bpf_module_->load_obj(obj_filename) != 0)
+    return StatusTuple(-1, "Unable to initialize BPF program");
+
+  return StatusTuple(0);
+}
+
 BPF::~BPF() {
   auto res = detach_all();
   if (res.code() != 0)
