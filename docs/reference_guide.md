@@ -1562,6 +1562,10 @@ bpf: Failed to load program: Invalid argument
 8: (85) call bpf_get_stackid#27
 cannot call GPL only function from proprietary program
 ```
+This can be overcome by setting an appropriate license, such as GPL using the following piece of code:
+```
+char _license[] SEC("license") = "GPL";
+```
 
 # Environment Variables
 
